@@ -1,0 +1,144 @@
+/* =====================================================================================
+   PORCELAIN INK · visual identity layer (loaded last on every page)
+   Presentational only: type, light, texture, surfaces and motion. Structure, content and
+   layout come from the mirrored CSS untouched. The site's dark surfaces are inverted to
+   paper at build time by scripts/porcelain.mjs. Classes prefixed .pi- come from porcelain.js.
+   ===================================================================================== */
+
+:root {
+  --pi-paper: #F4F1EA;
+  --pi-paper-2: #ECE8DE;
+  --pi-rule: #D9D4CA;
+  --pi-ink: #14161A;
+  --pi-ink-2: #3C3F45;
+  --pi-mute: #6E6A62;
+  --pi-red: #E4412B;
+  --pi-red-deep: #B02E1E;
+  --pi-glacier: #3E6896;
+
+  --pi-serif: 'Instrument Serif', 'Iowan Old Style', Georgia, serif;
+  --pi-sans: 'Geist', 'Helvetica Neue', Arial, sans-serif;
+  --pi-mono: 'Geist Mono', ui-monospace, Menlo, monospace;
+
+  --pi-ease: cubic-bezier(.2, .7, .1, 1);
+  --pi-draw: cubic-bezier(.7, 0, .2, 1);
+}
+
+/* ---------- base ------------------------------------------------------------------- */
+html { background: var(--pi-paper); scrollbar-color: var(--pi-ink) var(--pi-paper); color-scheme: light; }
+body { font-family: var(--pi-sans); -webkit-font-smoothing: antialiased; font-variant-numeric: lining-nums; }
+::selection { background: var(--pi-red); color: var(--pi-paper); }
+::-webkit-scrollbar { width: 10px; }
+::-webkit-scrollbar-track { background: var(--pi-paper); }
+::-webkit-scrollbar-thumb { background: var(--pi-ink); border: 3px solid var(--pi-paper); border-radius: 10px; }
+:focus-visible { outline: 2px solid var(--pi-red) !important; outline-offset: 3px; }
+body::after { /* paper grain */
+  content: ''; position: fixed; inset: 0; pointer-events: none; z-index: 2147482800; opacity: .07; mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .3 0 0 0 0 .25 0 0 0 0 .2 0 0 0 1 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* Editorial serif display */
+h1, h2, h3, h4, .elementor-heading-title, .hwh-index-title, .hwh-pos-h, .hwh-leader-h,
+.hwh-bx-title, .hwh-ccard-title, .hwh-suite-title, .hwh-eng-name, .hwh-award-title, .hwh-belief-h {
+  font-family: var(--pi-serif) !important; font-weight: 400 !important;
+}
+h1, h2, .hwh-index-title, .hwh-pos-h, .hwh-leader-h { letter-spacing: -.02em !important; line-height: 1 !important; }
+h3, h4, .hwh-bx-title, .hwh-ccard-title, .hwh-suite-title, .hwh-eng-name, .hwh-award-title, .hwh-belief-h { letter-spacing: -.005em !important; font-size: 1.2em; line-height: 1.12 !important; }
+.hwh-pos-accent, h1 em, h2 em, .elementor-heading-title em, .hwh-hero-l2 .hwh-w > span {
+  font-style: italic !important; color: var(--pi-red) !important; -webkit-text-fill-color: var(--pi-red) !important; background: none !important;
+}
+.hwh-hero-l1 .hwh-w > span, .hwh-index-title, .hwh-pos-h, .hwh-leader-h { -webkit-text-fill-color: var(--pi-ink) !important; background: none !important; }
+.ti, [class^="ti-"], [class*=" ti-"] { -webkit-text-fill-color: currentColor !important; }
+
+/* Mono labels */
+.hwh-kicker, .hwh-pos-eyebrow, .hwh-trust-label, .hwh-partners-label, .hwh-suite-tag, .hwh-bx-n, .hwh-suite-phase,
+.hwh-award-years, .hwh-award-by, .hwh-ccard-client, .hwh-dir-link, .hwh-bx-link, .hwh-suite-link, .hwh-mrole {
+  font-family: var(--pi-mono) !important; letter-spacing: .06em !important; text-transform: uppercase; font-weight: 500 !important;
+}
+.hwh-kicker { color: var(--pi-red) !important; }
+.hwh-kicker::before { content: '№ '; }
+
+/* ---------- hero: printed broadsheet -------------------------------------------------- */
+.hwh-hero-mesh {
+  background:
+    radial-gradient(50% 60% at 78% 12%, rgba(228,65,43,.10), transparent 70%),
+    radial-gradient(40% 50% at 12% 90%, rgba(62,104,150,.10), transparent 70%),
+    var(--pi-paper) !important;
+}
+.hwh-hero-mesh-in { opacity: .06 !important; }
+.hwh-hero-net { opacity: .35 !important; mix-blend-mode: multiply !important; }
+.hwh-hero-veil, .hwh-hero-fade { background: linear-gradient(180deg, transparent 60%, var(--pi-paper) 100%) !important; }
+.hwh-hero::before { /* printer's double rule */
+  content: ''; position: absolute; left: 4vw; right: 4vw; top: 28px; height: 5px; z-index: 2; pointer-events: none;
+  border-top: 2px solid var(--pi-ink); border-bottom: 1px solid var(--pi-ink);
+  transform-origin: 0 50%; animation: pi-rule 1.4s var(--pi-draw) .2s both;
+}
+.hwh-hero-h1 { letter-spacing: -.035em !important; line-height: .9 !important; font-size: clamp(3.6rem, 10vw, 10rem) !important; }
+.hwh-hero-lede { color: var(--pi-ink-2) !important; }
+.hwh-hero-lede em, .hwh-pos-sub em { font-family: var(--pi-serif); font-style: italic; color: var(--pi-red); font-size: 1.18em; font-weight: 400; }
+
+/* ---------- buttons: ink with vermilion ink-fill ------------------------------------------- */
+#hwnav .hw-btn--cta, #hwnav .hw-btn--cta:hover, a.cta, .hwh-cta, .hw-btn--cta, .hwf-cta, .hwh-work-cta, .elementor-button, .hs-button, input[type=submit] {
+  background: var(--pi-ink) !important; color: var(--pi-paper) !important; border-color: var(--pi-ink) !important;
+  box-shadow: none !important; transition: transform .4s var(--pi-ease), color .3s !important; font-weight: 500 !important;
+}
+a.cta *, .hwh-cta *, .hw-btn--cta *, .hwf-cta *, .hwh-work-cta *, .elementor-button * { color: inherit !important; }
+a.cta:hover, .hwh-cta:hover, .hw-btn--cta:hover, .hwf-cta:hover, .hwh-work-cta:hover, .elementor-button:hover, .hs-button:hover { transform: translateY(-2px); }
+.hw-btn--ghost, .hwh-textlink { border-color: var(--pi-ink) !important; color: var(--pi-ink) !important; }
+.pi-fill-host { position: relative !important; overflow: hidden !important; isolation: isolate; }
+.pi-fill { position: absolute; inset: 0; z-index: -1; pointer-events: none; background: var(--pi-red); transform: translateY(101%); transition: transform .5s var(--pi-draw); border-radius: inherit; }
+.pi-fill-host:hover > .pi-fill, .pi-fill-host:focus-visible > .pi-fill { transform: none; }
+
+/* links: vermilion ink underline drawn left to right */
+.hwh-dir-link, .hwh-bx-link, .hwh-suite-link, .hwh-textlink, .hwh-soc-cta {
+  background-image: linear-gradient(var(--pi-red), var(--pi-red)) !important; background-repeat: no-repeat !important;
+  background-size: 0% 1px !important; background-position: 0 100% !important; transition: background-size .6s var(--pi-draw), color .3s !important;
+}
+.hwh-dir-link:hover, .hwh-bx-link:hover, .hwh-suite-link:hover, .hwh-textlink:hover, .hwh-soc-cta:hover { background-size: 100% 1px !important; color: var(--pi-red) !important; }
+
+/* ---------- cards: paper stock ------------------------------------------------------------- */
+.pi-card { transition: transform .5s var(--pi-ease), box-shadow .5s var(--pi-ease), border-color .4s !important; }
+.pi-card:hover {
+  transform: translateY(-3px) !important;
+  border-color: var(--pi-ink) !important;
+  box-shadow: inset 0 3px 0 var(--pi-red), 0 18px 40px -26px rgba(20,22,26,.35) !important;
+}
+
+/* photography: developed prints */
+.hwh-ccard-media img, .hwh-res img, .elementor-widget-image img { filter: grayscale(.2) contrast(1.05); transition: filter .8s var(--pi-ease), transform 1.2s var(--pi-ease) !important; }
+.hwh-ccard:hover .hwh-ccard-media img, .hwh-res a:hover img { filter: none; transform: scale(1.03); }
+.hwh-pos-media img { filter: invert(1) hue-rotate(180deg) brightness(1.05) contrast(1.1) !important; mix-blend-mode: multiply; }
+.hwh-mavatar img, .hwh-mavatar { filter: grayscale(1) contrast(1.1); }
+
+/* ---------- margin section numerals --------------------------------------------------------- */
+.pi-num {
+  position: absolute; left: clamp(8px, 1.6vw, 28px); top: 72px; z-index: 2; pointer-events: none;
+  font: 400 12px/1 var(--pi-mono); letter-spacing: .1em; text-transform: uppercase; color: var(--pi-mute);
+  writing-mode: vertical-rl; transform: rotate(180deg); white-space: nowrap;
+}
+.pi-num b { color: var(--pi-red); display: inline-block; margin-top: 12px; font: italic 400 30px/1 var(--pi-serif); letter-spacing: 0; text-transform: none; }
+@media (max-width: 1279px) { .pi-num { display: none; } }
+
+/* ---------- reveals: ink drying, rules drawing, prints developing --------------------------- */
+.pi-js .pi-ink { opacity: 0; filter: blur(5px); }
+.pi-js .pi-ink.pi-in { opacity: 1; filter: none; transition: opacity 1s var(--pi-ease), filter 1.1s var(--pi-ease); }
+.pi-js .pi-rv { opacity: 0; transform: translateY(22px); }
+.pi-js .pi-rv.pi-in { opacity: 1; transform: none; transition: opacity .8s var(--pi-ease) var(--d, 0s), transform .9s var(--pi-ease) var(--d, 0s), box-shadow .5s, border-color .4s !important; }
+.pi-js .pi-rv.pi-in.pi-card:hover { transform: translateY(-3px) !important; transition: transform .5s var(--pi-ease), box-shadow .5s, border-color .4s !important; }
+.pi-js .pi-dev img { filter: grayscale(1) contrast(1.3) brightness(1.15) !important; opacity: .4; }
+.pi-js .pi-dev.pi-in img { filter: grayscale(.2) contrast(1.05) !important; opacity: 1; transition: filter 2s var(--pi-ease) var(--d, 0s), opacity 1.2s var(--pi-ease) var(--d, 0s) !important; }
+.pi-js .pi-line { position: relative; }
+.pi-js .pi-line::after { content: ''; position: absolute; left: 0; right: 0; top: 0; height: 1px; background: var(--pi-ink); transform: scaleX(0); transform-origin: 0 50%; pointer-events: none; z-index: 3; }
+.pi-js .pi-line.pi-in::after { transform: scaleX(1); transition: transform 1.6s var(--pi-draw); }
+
+@keyframes pi-rule { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+
+@media (prefers-reduced-motion: reduce) {
+  .hwh-hero::before { animation: none; }
+  .pi-js .pi-ink, .pi-js .pi-rv, .pi-js .pi-dev img { opacity: 1 !important; filter: none !important; transform: none !important; transition: none !important; }
+  .pi-js .pi-line::after { transform: scaleX(1); transition: none; }
+}
+
+/* dark decorative hero media inverted onto paper; particle infinity printed in vermilion */
+.hwh-hero-vid { filter: invert(1) hue-rotate(180deg) sepia(.35) saturate(.6) brightness(1.04) !important; opacity: .55 !important; mix-blend-mode: multiply; }
+.hwh-pos-media img { filter: invert(1) contrast(1.15) saturate(1.3) !important; mix-blend-mode: multiply; }
